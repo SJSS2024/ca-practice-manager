@@ -15,11 +15,12 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "node-cron": "^3.0.3",
-    "pg": "^8.19.0",
+    "pg": "^8.19.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
   },
+  "engines": { "node": ">=18.0.0" },
   "author": "CA Practice Manager",
   "license": "MIT"
 }

@@ -11,7 +11,7 @@ const cron = require('node-cron');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-const DB_URL = 'postgresql://postgres:Sjss%402025%24%25@db.qkmeywbgxwjyiifsncvp.supabase.co:5432/postgres';
+const DB_URL = process.env.DATABASE_URL || 'postgresql://postgres:Sjss%402025%24%25@db.qkmeywbgxwjyiifsncvp.supabase.co:5432/postgres';
 
 // PostgreSQL connection
 const pool = new Pool({
