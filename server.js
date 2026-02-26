@@ -11,11 +11,13 @@ const cron = require('node-cron');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-const DB_URL = process.env.DATABASE_URL || 'postgresql://postgres:Sjss%402025%24%25@db.qkmeywbgxwjyiifsncvp.supabase.co:5432/postgres';
-
 // PostgreSQL connection
 const pool = new Pool({
-  connectionString: DB_URL,
+  host: process.env.DB_HOST || 'db.qkmeywbgxwjyiifsncvp.supabase.co',
+  port: parseInt(process.env.DB_PORT || '5432'),
+  database: process.env.DB_NAME || 'postgres',
+  user: process.env.DB_USER || 'postgres',
+  password: process.env.DB_PASSWORD || 'Sjss@2025$%',
   ssl: { rejectUnauthorized: false }
 });
 
