@@ -1557,6 +1557,8 @@ const triggerReminders = async () => {
 };
 
 // Serve the main page
+app.get('/healthz', (req, res) => res.status(200).send('OK'));
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -1567,11 +1569,15 @@ async function startServer() {
     await createTables();
     await seedData();
     
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', async () => {
       console.log(`CA Practice Management System running on port ${PORT}`);
-      createTasksFromRecurringRules();
-      markOverdueTasks();
-      triggerReminders();
+      try {
+        await createTasksFromRecurringRules();
+        await markOverdueTasks();
+        await triggerReminders();
+      } catch (e) {
+        console.error('Automation error (non-fatal):', e.message);
+      }
     });
   } catch (error) {
     console.error('Failed to start server:', error);
