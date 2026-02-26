@@ -14,7 +14,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-producti
 // PostgreSQL connection
 const pool = new Pool({
   host: process.env.DB_HOST || 'db.qkmeywbgxwjyiifsncvp.supabase.co',
-  port: parseInt(process.env.DB_PORT || '6543'),
+  port: parseInt(process.env.DB_PORT || '5432'),
   database: process.env.DB_NAME || 'postgres',
   user: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASSWORD || 'Sjss@2025$%',
