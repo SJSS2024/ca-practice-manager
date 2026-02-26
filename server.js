@@ -1567,28 +1567,30 @@ app.get('/', (req, res) => {
 });
 
 // Initialize database and start server
-async function startServer() {
+// Start HTTP server FIRST so Render health check passes, then init DB
+app.listen(PORT, '0.0.0.0', async () => {
+  console.log(`CA Practice Management System running on port ${PORT}`);
   try {
+    console.log('Connecting to database...');
+    await pool.query('SELECT 1');
+    console.log('Database connected!');
     await createTables();
+    console.log('Tables ready');
     await seedData();
-    
-    app.listen(PORT, '0.0.0.0', async () => {
-      console.log(`CA Practice Management System running on port ${PORT}`);
-      try {
-        await createTasksFromRecurringRules();
-        await markOverdueTasks();
-        await triggerReminders();
-      } catch (e) {
-        console.error('Automation error (non-fatal):', e.message);
-      }
-    });
+    console.log('Seed complete');
+    try {
+      await createTasksFromRecurringRules();
+      await markOverdueTasks();
+      await triggerReminders();
+    } catch (e) {
+      console.error('Automation error (non-fatal):', e.message);
+    }
+    console.log('Server fully initialized');
   } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
+    console.error('Database initialization error:', error.message);
+    console.error(error.stack);
   }
-}
-
-startServer();
+});
 
 // Schedule daily automation
 cron.schedule('0 6 * * *', () => {
