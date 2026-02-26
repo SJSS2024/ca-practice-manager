@@ -11,6 +11,10 @@ const cron = require('node-cron');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+// Force IPv4 DNS resolution for Supabase compatibility
+const dns = require('dns');
+dns.setDefaultResultOrder('ipv4first');
+
 // PostgreSQL connection
 const pool = new Pool({
   host: process.env.DB_HOST || 'db.qkmeywbgxwjyiifsncvp.supabase.co',
